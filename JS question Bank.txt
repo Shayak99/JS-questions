@@ -1,0 +1,493 @@
+1.What are the different data types present in javascript?
+
+
+ans) 
+Primitive types : string , Number , bigInt, Boolean , 
+undefined, null , symbol
+Non-primitive : Object
+
+typeof "John Doe" // Returns "string"
+typeof 3.14 // Returns "number"
+typeof true // Returns "boolean"
+typeof 234567890123456789012345678901234567890n // Returns bigint
+typeof undefined // Returns "undefined"
+typeof null // Returns "object" (kind of a bug in JavaScript)
+typeof Symbol('symbol') // Returns Symbol
+------------------------------------------
+
+2. Explain Hoisting in javascript.
+
+
+ans ) 
+function doSomething(){
+  x = 33;
+  console.log(x);
+  var x;
+}
+output : 33 because x is hoisted in local scope
+
+var x;
+console.log(x); 
+x = 23;
+// Outputs "undefined" since the initialization of "x" is not hoisted
+----------------------------------
+
+3. What do we need to do to avoid hoisting? 
+
+ans ) use strict
+----------------------------------
+
+4. Explain Implicit Type Coercion in javascript.
+
+
+ans ) Implicit type coercion in javascript is automatic conversion of value 
+from one data type to another. It takes place when the operands of an expression are 
+of different data types.
+
+var x = 3;
+Var y = "3";
+x - y   //Returns 0 since the variable y (string type) is converted to a number type 
+type
+--------------------------------------
+
+5. Explain Higher Order Functions in javascript.
+
+
+ans )  Functions that operate on other functions, either by taking them as arguments
+ or by returning them, are called higher-order functions.
+Higher order functions are a result of functions being first-class citizens in 
+javascript.
+
+function higherOrder2() {
+  return function() {
+    return "Do something";
+  }
+}
+        
+var x = higherOrder2();
+x()   // Returns "Do something"
+------------------------------------
+
+6.  Explain “this” keyword.
+
+
+ans) The “this” keyword refers to the object that the function is a property of.
+The value of “this” keyword will always depend on the object that is invoking the 
+function.
+
+var obj = {
+    name:  "vivek",
+    getName: function(){
+    console.log(this.name);
+  }
+}
+
+        
+obj.getName();  // vivek
+-----------------------
+
+var obj = {
+    name:  "vivek",
+    getName: function(){
+    console.log(this.name);
+  }
+        
+}       
+var getName = obj.getName;       
+var obj2 = {name:"akshay", getName };
+obj2.getName();     
+
+// akshay , at the time of invocation, getName() is 
+a property of obj2 , therefore the “this” keyword will refer to obj2 .
+------------------------------------------
+var obj1 = {
+    address : "Mumbai,India",
+    getAddress: function(){
+    console.log(this.address); 
+  }
+}
+       
+var getAddress = obj1.getAddress;
+var obj2 = {name:"akshay"};
+obj2.getAddress();   
+
+// error , the this keyword refers to the object obj2 , 
+obj2 does not have the property “address”‘, hence the getAddress function throws an 
+error.
+
+----------------------------------------------
+7. What is DOM?
+ans)
+DOM stands for Document Object Model.
+DOM is a programming interface for HTML and XML documents.
+When the browser tries to render a HTML document, it creates an object based 
+on the HTML document called DOM. Using this DOM, we can manipulate or change 
+various elements inside the HTML document.
+----------------------------------------------
+
+8. What are arrow functions?
+ans) 
+var obj1 = {
+  valueOfThis: function(){
+    return this;
+  }
+}
+var obj2 = {
+  valueOfThis: ()=>{
+    return this;
+  }
+}
+obj1.valueOfThis(); // Will return the object obj1
+obj2.valueOfThis(); // Will return window/global object
+-----------------------------------------------------------
+
+9.Differences between declaring variables using var, let and const.
+ans)
+
+var variable1 = 23;
+
+let variable2 = 89;
+
+function catchValues(){
+  console.log(variable1);
+  console.log(variable2);
+}
+
+window.variable1; // Returns the value 23
+
+window.variable2; // Returns undefined 
+
+Variables that are declared with the var keyword in the global scope are added 
+to the window/global object. Therefore, they can be accessed using window.variableName.
+
+Whereas, the variables declared with the let keyword are not added to the global 
+object, therefore, trying to access such variables using window.variableName results 
+in an error.
+---------------------------------------
+function varVsLetFunction(){
+  let awesomeCar1 = "Audi";
+  var awesomeCar2 = "Mercedes";
+}
+
+console.log(awesomeCar1); // Throws an error
+console.log(awesomeCar2); // Throws an error
+----------------------------------------
+{
+  var variable3 = [1, 2, 3, 4];
+}
+
+console.log(variable3);      // Outputs [1,2,3,4]
+
+{
+  let variable4 = [6, 55, -1, 2];
+}
+
+console.log(variable4);     // Throws error
+
+for(let i = 0; i < 2; i++){
+  //Do something
+}
+
+console.log(i);             // Throws error
+
+for(var j = 0; j < 2; i++){
+  // Do something
+}
+
+console.log(j)              // Outputs 2
+--------------------------------------------
+10. What is the rest parameter and spread operator?
+ans)
+
+function extractingArgs(...args){
+  return args[1];
+}
+
+extractingArgs(8,9,1);       // Returns 9
+
+function addAllArgs(...args){
+  let sumOfArgs = 0;
+  let i = 0;
+  while(i < args.length){
+    sumOfArgs += args[i];
+    i++;
+  }
+  return sumOfArgs;
+}
+
+addAllArgs(6, 5, 7, 99);      // Returns 117
+addAllArgs(1, 3, 4);          // Returns 8
+-----------------------------------------
+
+function addFourNumbers(num1,num2,num3,num4){
+  return num1 + num2 + num3 + num4;
+}
+
+let fourNumbers = [5, 6, 7, 8];
+addFourNumbers(...fourNumbers);
+// Spreads [5,6,7,8] as 5,6,7,8
+-------------------------------------------
+
+let obj1 = {x:'Hello', y:'Bye'};
+let obj2 = {z:'Yes', a:'No'};
+let mergedObj = {...obj1, ...obj2};   // Spreads both the objects and merges it
+console.log(mergedObj);
+// Outputs {x:'Hello', y:'Bye',z:'Yes',a:'No'};
+
+----------------------------------------------
+
+11. What is the use of promises in javascript?
+
+ans) Promises are used to handle asynchronous operations like server requests, 
+for the ease of understanding, we are using an operation to calculate the sum of 
+three elements.
+----------------------------------------------
+
+12. Write a code using prmomise where we will calculating the sum of three elements, 
+if the length of elements array is more than 3, promise is rejected, else the promise
+ is resolved and the sum is returned.
+
+ans) function sumOfThreeElements(...elements){
+  return new Promise((resolve,reject)=>{
+    if(elements.length > 3 ){
+      reject("Only three elements or less are allowed");
+    }
+    else{
+      let sum = 0;
+      let i = 0;
+      while(i < elements.length){
+        sum += elements[i];
+        i++;
+      }
+      resolve("Sum has been calculated: "+sum);
+    }
+  })
+}
+------------------------------------------------
+
+13.Implement a function that returns an updated array with r right rotations on an 
+array of integers.
+
+Example:
+
+Given the following array:
+
+[2,3,4,5,7]
+
+Perform 3 right rotations:
+
+First rotation : [7,2,3,4,5] , 
+Second rotation : [5,7,2,3,4] and, 
+Third rotation: [4,5,7,2,3]
+
+return [4,5,7,2,3]
+
+Answer:
+
+function rotateRight(arr,rotations){
+  if(rotations == 0) return arr;
+  for(let i = 0; i < rotations;i++){
+    let element = arr.pop();
+    arr.unshift(element);
+  }
+
+  return arr;
+}
+
+
+rotateRight([2, 3, 4, 5, 7], 3); // Return [4,5,7,2,3]
+rotateRight([44, 1, 22, 111], 5); // Returns [111,44,1,22]   
+
+-----------------------------------
+
+14. Guess the output of the following code:
+
+
+var x = 23;
+
+(function(){
+  var x = 43;
+  (function random(){
+    x++;
+    console.log(x);
+    var x = 21;
+  })();
+})();
+// NaN
+---------------
+let x= {}, y = {name:"Ronny"},z = {name:"John"};
+
+x[y] = {name:"Vivek"};
+x[z] = {name:"Akki"};
+
+console.log(x[y]);
+
+Output will be {name: “Akki”}.
+
+Writing x[y] = {name:”Vivek”} , is same as writing x[‘object Object’] = {name:”Vivek”} ,
+While setting a property of an object, javascript coerces the parameter into a string.
+Therefore, since y is an object, it will be converted to ‘object Object’.
+Both x[y] and x[z] are referencing the same property.
+-------------------
+
+function runFunc(){
+  console.log("1" + 1);
+  console.log("A" - 1);
+  console.log(2 + "-2" + "2");
+  console.log("Hello" - "World" + 78);
+  console.log("Hello"+ "78");
+}
+
+runFunc();
+
+output:
+11
+Nan
+2-22
+NaN
+Hello78
+
+-----------------------
+15. What are generator functions?
+
+ans) Generators in JavaScript -- especially when combined with Promises -- 
+are a very powerful tool for asynchronous programming as they mitigate -- if 
+not entirely eliminate -- the problems with callbacks, such as Callback Hell and 
+Inversion of Control. However, an even simpler solution to these problems can be 
+achieved with async functions.
+
+------------------------------
+
+16 . What's the output?
+
+
+function* generatorOne() {
+  yield ['a', 'b', 'c'];
+}
+
+function* generatorTwo() {
+  yield* ['a', 'b', 'c'];
+}
+
+const one = generatorOne();
+const two = generatorTwo();
+
+console.log(one.next().value);
+console.log(two.next().value);
+
+//['a', 'b', 'c'] and a
+
+------------------------
+17. 
+
+let config = {
+  alert: setInterval(() => {
+    console.log('Alert!');
+  }, 1000),
+};
+
+config = null;
+
+// Since this is an interval, setting config to null or delete-ing config.alert 
+won't garbage-collect the interval, so the interval will still be called. It should 
+be cleared with clearInterval(config.alert) to remove it from memory.
+---------------------------------
+
+18.
+What's the output?
+const person = {
+  firstName: 'Lydia',
+  lastName: 'Hallie',
+  pet: {
+    name: 'Mara',
+    breed: 'Dutch Tulip Hound',
+  },
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+};
+
+console.log(person.pet?.name);
+console.log(person.pet?.family?.name);
+console.log(person.getFullName?.());
+console.log(member.getLastName?.());
+
+// Mara ,undefined ,Lydia Hallie ,ReferenceError
+
+//With the optional chaining operator ?., we no longer have to explicitly check 
+whether the deeper nested values are valid or not. If we're trying to access a 
+property on an undefined or null value (nullish), the expression short-circuits and 
+returns undefined.
+
+----------------------------------
+19.Can you describe the main difference between a .forEach loop and a .map() loop and why you would pick one versus the other?
+
+Const a = [1,2,3];
+Const doubled = a.forEach((num, ind) => {
+	//did something
+})
+Doubled = ?   // undefined
+
+Const a = [1,2,3];
+Const doubled = a.map((num, ind) => {
+	//did something
+})
+Doubled = ?   // [2,4,6]
+
+-----------------------------------------
+
+20. What will be the output of the following ?
+
+Var output = (function (x) {
+	Delete x;
+Return x;
+})(0);
+Console.log(output);
+
+// Above code will output 0 as output. delete operator is used to delete a 
+property from an object. Here x is not an object it's local variable. delete 
+operator doesn't affect local variable.
+
+-----------------------------------
+
+21. 
+	Output :- 
+Var employee = {
+	Company : “xyz”;
+}
+Var emp1 = Object.create(employee);
+Delete emp1.company 
+Console.log(emp1.company);
+
+// Above code will output xyz as output. Here emp1 object got company as prototype 
+property. delete operator doesn't delete prototype property.
+emp1 object doesn't have company as its own property. You can test it like: 
+console.log(emp1.hasOwnProperty(‘company’);  // output : false
+
+
+22. Fetch an api data and view in HTML table , Id , Email , Avatar
+
+ans) 
+
+fetch("http://dummy.restapiexample.com/api/v1/employees").then(
+  res => {
+    res.json().then(
+      data => {
+        console.log(data);
+        if (data.length > 0) {
+
+          var temp = "";
+          data.forEach((itemData) => {
+            temp += "<tr>";
+            temp += "<td>" + itemData.id + "</td>";
+            temp += "<td>" + itemData.employee_name + "</td>";
+            temp += "<td>" + itemData.employee_salary + "</td>";
+          });
+          document.getElementById('data').innerHTML = temp;
+        }
+      }
+    )
+  }
+)
+
+API- https://reqres.in/api/users?page=2
